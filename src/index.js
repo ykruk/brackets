@@ -1,17 +1,15 @@
 module.exports = function check(str, bracketsConfig) {
-    if(str.length%2 === 1) return false;
-    //no need to check if odd number of brackets
-
-    let brackets = {};
-  
-    //filling obj 'brackets' with data from bracketsConfig (opening and closing brackets used in string)
-    bracketsConfig.forEach(function(element){
-        brackets[element[0]] = element[1];
-    });
-  
-    let testStorage = [];
+    if(str.length%2 === 1) return false; //no need to check if odd number of brackets
 
     let testStr = str.split('');
+
+    let testStorage = [];
+  
+    //filling obj 'brackets' with data from bracketsConfig (opening and closing brackets used in string)
+    let brackets = bracketsConfig.reduce((acc, el) => {
+      acc[el[0]] = el[1];
+      return acc;
+    }, {});
   
     for (let i = 0; i < testStr.length; i++) {
       if (testStr[i] in brackets) {
@@ -27,5 +25,6 @@ module.exports = function check(str, bracketsConfig) {
         testStorage.pop();
       }
     }
+
     return (testStorage.length === 0) ? true : false; 
 }
